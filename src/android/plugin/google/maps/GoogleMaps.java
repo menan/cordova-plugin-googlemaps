@@ -56,6 +56,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
+import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener;
 import com.google.android.gms.maps.GoogleMap.OnIndoorStateChangeListener;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
@@ -1679,6 +1680,27 @@ public class GoogleMaps extends CordovaPlugin implements View.OnClickListener, O
   /**
    * Notify the myLocationChange event to JS
    */
+            
+  @Override
+  public void onCameraIdle() {
+//     JSONObject params = new JSONObject();
+//     String jsonStr = "";
+//     try {
+//       JSONObject target = new JSONObject();
+//       target.put("lat", position.target.latitude);
+//       target.put("lng", position.target.longitude);
+//       params.put("target", target);
+//       params.put("hashCode", position.hashCode());
+//       params.put("bearing", position.bearing);
+//       params.put("tilt", position.tilt);
+//       params.put("zoom", position.zoom);
+//       jsonStr = params.toString();
+//     } catch (JSONException e) {
+//       e.printStackTrace();
+//     }
+    webView.loadUrl("javascript:plugin.google.maps.Map._onCameraEvent('camera_change', '{}')");
+  }
+
   @Override
   public void onCameraChange(CameraPosition position) {
     JSONObject params = new JSONObject();
@@ -1696,7 +1718,7 @@ public class GoogleMaps extends CordovaPlugin implements View.OnClickListener, O
     } catch (JSONException e) {
       e.printStackTrace();
     }
-    webView.loadUrl("javascript:plugin.google.maps.Map._onCameraEvent('camera_change', " + jsonStr + ")");
+//     webView.loadUrl("javascript:plugin.google.maps.Map._onCameraEvent('camera_change', " + jsonStr + ")");
   }
 
   @Override
